@@ -1,13 +1,16 @@
-// ignore_for_file: prefer_const_constructors, unnecessary_new, prefer_const_literals_to_create_immutables, camel_case_types, non_constant_identifier_names, sized_box_for_whitespace, unused_local_variable, prefer_typing_uninitialized_variables, unused_import, unnecessary_import, unnecessary_null_comparison
+// ignore_for_file: prefer_const_constructors, unnecessary_new, prefer_const_literals_to_create_immutables, camel_case_types, non_constant_identifier_names, sized_box_for_whitespace, unused_local_variable, prefer_typing_uninitialized_variables, unused_import, unnecessary_import, unnecessary_null_comparison, unused_field
 
 import 'package:dummy_ai/api/api_service.dart';
 import 'package:dummy_ai/constant/Catagory.dart';
 import 'package:dummy_ai/constant/VerticleScrollArticles.dart';
 import 'package:dummy_ai/model/article_model.dart';
 import 'package:dummy_ai/responsiveapp.dart';
+import 'package:dummy_ai/screens/Message.dart';
 import 'package:dummy_ai/screens/Show.dart';
+import 'package:dummy_ai/screens/search.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -57,23 +60,27 @@ class _HomePageState extends State<HomePage> {
 
     return responsiveApp(
       mobile: Scaffold(
+        // bottom navigation bar icon plus label is hear
         appBar: AppBar(
           title: Text(
             "Dummy Ai",
-            style: TextStyle(fontFamily: "Poppins"),
+            style: TextStyle(fontFamily: "Poppins", color: Colors.white),
           ),
           leading: leadingButton(),
+          elevation: 1,
           backgroundColor: Colors.red,
           actions: [search_action()],
         ),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          child: SafeArea(
-              child: SingleChildScrollView(
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   "The speacial news",
                   style: TextStyle(
@@ -136,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                 NewsArticle(),
               ],
             ),
-          )),
+          ),
         ),
       ),
 
@@ -412,6 +419,7 @@ class _HomePageState extends State<HomePage> {
         if (snapshot.hasData) {
           List<Article>? articles = snapshot.data;
           return ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: articles?.length,
@@ -608,7 +616,7 @@ class _HomePageState extends State<HomePage> {
               key: key2,
               //shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              physics: ScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(),
               itemCount: Catagorys.length,
               itemBuilder: (context, index) {
                 return SizedBox(
@@ -643,6 +651,11 @@ class leadingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: () {}, icon: Icon(Icons.menu));
+    return IconButton(
+        onPressed: () {},
+        icon: Icon(
+          Icons.menu,
+          color: Colors.white,
+        ));
   }
 }
